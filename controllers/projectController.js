@@ -86,9 +86,15 @@ module.exports = {
     listFull(req, res) {
         return project
             .findAll({
+                attributes: ['id', 'title', 'description', 'state'],
                 include: [{
+                    attributes: ['id', 'description'],
                     model: activity
-                }]
+                },
+                {
+                    model: employ
+                }
+                ]
             })
             .then((project) => res.status(200).send(project))
             .catch((error) => { res.status(400).send(error); });
@@ -99,7 +105,7 @@ module.exports = {
             .findAll({
                 attributes: ['id', 'title'],
                 include: [{
-                    attributes: ['id', 'descripcion'],
+                    attributes: ['id', 'description'],
                     model: activity
                 },
                 {
